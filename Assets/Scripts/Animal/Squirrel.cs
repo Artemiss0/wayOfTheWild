@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Squirrel : Animal
 {
-    private void Start()
-    {
-        DropAbility();
-    }
-
     public override void DropAbility()
     {
         Instantiate(AbilityPrefab, transform.position + transform.forward * 2, Quaternion.identity);
