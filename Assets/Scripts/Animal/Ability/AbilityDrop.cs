@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class AbilityDrop : MonoBehaviour
 {
-    public AnimalAbility AnimalAbility;
     public AnimalAbilityNameEnum AbilityName;
     public string Description;
 
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        AbilityName = AnimalAbility.AbilityFromAnimal;
-        Description = AnimalAbility.Description;
+        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            other.gameObject.GetComponent<PlayerAbilities>().AddNewAbility(AbilityName);
+            Destroy(gameObject);
+        }
     }
 }
