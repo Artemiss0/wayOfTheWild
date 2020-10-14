@@ -136,6 +136,13 @@ GameObject:
   - component: {fileID: 124267186}
   m_Layer: 0
   m_Name: Cube
+  - component: {fileID: 577299924}
+  - component: {fileID: 577299923}
+  - component: {fileID: 577299922}
+  - component: {fileID: 577299921}
+  - component: {fileID: 577299926}
+  m_Layer: 0
+  m_Name: Squirrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
