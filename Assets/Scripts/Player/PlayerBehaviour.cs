@@ -47,7 +47,6 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             Animal highlightedAnimal = _currentHighlightedObject.gameObject.GetComponent(typeof(Animal)) as Animal;
-            print(highlightedAnimal);
             highlightedAnimal.DropAbility();
         }
     }
