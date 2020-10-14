@@ -8,6 +8,7 @@ public class Squirrel : Animal
     {
         Instantiate(AbilityPrefab, transform.position + transform.forward * 2, Quaternion.identity);
         AnimalAbility squirrel = (AnimalAbility) Resources.Load(AbilityPath + AnimalAbilityNameEnum.Squirrel);
-        AbilityPrefab.GetComponent<AbilityDrop>().AnimalAbility = squirrel;
+        AbilityPrefab.GetComponent<AbilityDrop>().AbilityName = squirrel.AbilityFromAnimal;
+        AbilityPrefab.GetComponent<AbilityDrop>().Description = squirrel.Description;
     }
 }

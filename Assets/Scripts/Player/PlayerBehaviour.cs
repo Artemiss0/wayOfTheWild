@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -21,13 +23,32 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (interactDetector.transform.gameObject.layer == LayerMask.NameToLayer("Interactable"))
             {
+                // For interaction
                 _currentHighlightedObject = interactDetector.transform.gameObject;
                 SetInteractionHighlight(_currentHighlightedObject, Shader.Find("Outlined/Highlight"));
-            } 
+
+            }  else if (interactDetector.transform.gameObject.layer == LayerMask.NameToLayer("Animal"))
+            {
+                // For animal interaction
+                _currentHighlightedObject = interactDetector.transform.gameObject;
+                SetInteractionHighlight(_currentHighlightedObject, Shader.Find("Outlined/Highlight"));
+
+                InteractWithAnimal();
+            }
         }
         else if(_currentHighlightedObject)
         {
             SetInteractionHighlight(_currentHighlightedObject, Shader.Find("Standard"));
+        }
+    }
+
+    private void InteractWithAnimal()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Animal highlightedAnimal = _currentHighlightedObject.gameObject.GetComponent(typeof(Animal)) as Animal;
+            print(highlightedAnimal);
+            highlightedAnimal.DropAbility();
         }
     }
 
