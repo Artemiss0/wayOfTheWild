@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d84880d3bf7d98428ab3dbdda10f3a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AbilityName: 1
+  AbilityName: 2
   Description: Jump higher and further!
 --- !u!95 &-592826875349144425
 Animator:

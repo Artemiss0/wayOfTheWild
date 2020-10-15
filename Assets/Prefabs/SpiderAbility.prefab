@@ -128,5 +128,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d84880d3bf7d98428ab3dbdda10f3a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AbilityName: 0
-  Description: 
+  AbilityName: 3
+  Description: Hook yourself to the distance!
