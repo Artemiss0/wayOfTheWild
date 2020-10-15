@@ -16,15 +16,13 @@ public class PlayerMovement : MonoBehaviour
     public float GroundDistance = 0.4f;
     public float JumpHight = 3f;
     public float SuperJumpHeight = 20f;
-    public float PlayerClimbSpeed = 35f;
+    public float PlayerClimbSpeed;
 
     private Vector3 _velocity, _direction;
     private bool _isGrounded;
     private float _turnSmoothVelocity;
-    private bool _isClimbing;
+    private bool _isClimbing = false;
     private bool _canSuperJump;
-
-
 
     void Update()
     {
@@ -35,33 +33,36 @@ public class PlayerMovement : MonoBehaviour
         _velocity.y += Gravity * Time.deltaTime;
         _direction = new Vector3(horizontal, 0f, vertical);
 
-        Controller.Move(_velocity * Time.deltaTime);
-
-        if(_direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
-            transform.rotation = Quaternion.Euler(0, angle, 0);
-
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
-            Controller.Move(moveDir * Speed * Time.deltaTime);
-        }
-
-        if(_isGrounded && _velocity.y < 0)
-        {
-            _velocity.y = -2f;
-        }
-
-        if (Input.GetButtonDown("Jump") && _isGrounded)
-        {
-            if (_canSuperJump)
+        if (!_isClimbing)
+        { 
+            Controller.Move(_velocity * Time.deltaTime);
+      
+            if(_direction.magnitude >= 0.1f)
             {
-                _velocity.y = Mathf.Sqrt(SuperJumpHeight * -2f * Gravity);
+                float targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
+                transform.rotation = Quaternion.Euler(0, angle, 0);
+
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+                Controller.Move(moveDir * Speed * Time.deltaTime);
             }
-            else
+
+            if(_isGrounded && _velocity.y < 0)
             {
-                _velocity.y = Mathf.Sqrt(JumpHight * -2f * Gravity);
+                _velocity.y = -2f;
+            }
+
+            if (Input.GetButtonDown("Jump") && _isGrounded)
+            {
+                if (_canSuperJump)
+                {
+                    _velocity.y = Mathf.Sqrt(SuperJumpHeight * -2f * Gravity);
+                }
+                else
+                {
+                    _velocity.y = Mathf.Sqrt(JumpHight * -2f * Gravity);
+                }
             }
         }
 
@@ -108,29 +109,45 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hitWall;
         if (Physics.Raycast(transform.position, transform.forward, out hitWall, 1))
         {
-            if (hitWall.transform.gameObject.name.Equals("Wall")) {
-                if(Input.GetKey(KeyCode.Space))
-                {
-                    _isClimbing = true;
-                    if (_isClimbing)
-                    {
-                        Gravity = 0;
-                        Controller.transform.position += new Vector3(0f, PlayerClimbSpeed, 0f) * Time.deltaTime;
-                    }
-                } else
-                {
-                    _isClimbing = false;
-                    Gravity = -36f;
-                }
-            } else
+            if (hitWall.transform.gameObject.name.Equals("Wall"))
             {
-                _isClimbing = false;
-                Gravity = -36f;
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    _isClimbing = !_isClimbing;
+                    Gravity = 0;
+                }
+            }
+
+            if (_isClimbing)
+            {
+                PlayerClimbMovement();
+                print("Can climb");
             }
         } else
         {
             _isClimbing = false;
-            Gravity = -36f;
+            Gravity = -35f;
+        }
+
+    }
+
+    private void PlayerClimbMovement()
+    {
+        if (Input.GetKey(KeyCode.W) && _isClimbing)
+        {
+            transform.Translate(Vector3.up * PlayerClimbSpeed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.S) && _isClimbing)
+        {
+            transform.Translate(-Vector3.up * PlayerClimbSpeed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            transform.Translate(Vector3.right * PlayerClimbSpeed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            transform.Translate(-Vector3.right * PlayerClimbSpeed * Time.deltaTime);
         }
     }
 
