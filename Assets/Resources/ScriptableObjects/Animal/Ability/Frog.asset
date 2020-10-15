@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d2a47c9e4233f41ba5448381558856, type: 3}
   m_Name: Frog
   m_EditorClassIdentifier: 
-  AbilityFromAnimal: 1
+  AbilityFromAnimal: 2
   Description: Jump higher and further!

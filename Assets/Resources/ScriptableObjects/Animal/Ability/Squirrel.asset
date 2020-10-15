@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d2a47c9e4233f41ba5448381558856, type: 3}
   m_Name: Squirrel
   m_EditorClassIdentifier: 
-  AbilityFromAnimal: Squirrel
+  AbilityFromAnimal: 1
   Description: Makes you climb higher than you'd ever dream!
