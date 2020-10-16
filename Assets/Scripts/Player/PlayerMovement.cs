@@ -17,11 +17,11 @@ public class PlayerMovement : MonoBehaviour
     public float JumpHight = 3f;
     public float SuperJumpHeight = 20f;
     public float PlayerClimbSpeed;
+    public bool IsClimbing = false;
 
     private Vector3 _velocity, _direction;
     private bool _isGrounded;
     private float _turnSmoothVelocity;
-    private bool _isClimbing = false;
     private bool _canSuperJump;
 
     void Update()
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         _velocity.y += Gravity * Time.deltaTime;
         _direction = new Vector3(horizontal, 0f, vertical);
 
-        if (!_isClimbing)
+        if (!IsClimbing)
         { 
             Controller.Move(_velocity * Time.deltaTime);
       
@@ -113,19 +113,19 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    _isClimbing = !_isClimbing;
+                    IsClimbing = !IsClimbing;
                     Gravity = 0;
                 }
             }
 
-            if (_isClimbing)
+            if (IsClimbing)
             {
                 PlayerClimbMovement();
                 print("Can climb");
             }
         } else
         {
-            _isClimbing = false;
+            IsClimbing = false;
             Gravity = -35f;
         }
 
@@ -133,11 +133,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayerClimbMovement()
     {
-        if (Input.GetKey(KeyCode.W) && _isClimbing)
+        if (Input.GetKey(KeyCode.W) && IsClimbing)
         {
             transform.Translate(Vector3.up * PlayerClimbSpeed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.S) && _isClimbing)
+        else if (Input.GetKey(KeyCode.S) && IsClimbing)
         {
             transform.Translate(-Vector3.up * PlayerClimbSpeed * Time.deltaTime);
         }
